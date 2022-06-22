@@ -4,7 +4,7 @@
 	<!-- FIXME I can both use this parameter, or simply pass to the topic odom the timestamp of the bag. Maybe I should both, I don't know-->
 	<param name="/use_sim_time" value="true"/>
 
-	<!--  **************** Scan merger ****************  -->
+	<!--  **************** Static transformation ****************  -->
 	<include file="$(find omnirobot_loc_and_mapping)/launch/static_transforms.launch.xml"/>
 
 	<!--  **************** Scan merger ****************  -->
