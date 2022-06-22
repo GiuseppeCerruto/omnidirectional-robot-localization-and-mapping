@@ -1,9 +1,14 @@
 <launch>
+
+	<!--  **************** Synchronization of the simulation time ****************  -->
+	<!-- FIXME I can both use this parameter, or simply pass to the topic odom the timestamp of the bag. Maybe I should both, I don't know-->
+	<param name="/use_sim_time" value="true"/>
 	
+	<!--  **************** Merge scan ****************  -->
 	<node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
 		<param name="destination_frame" value="base_link"/>
 		<param name="cloud_destination_topic" value="/merged_cloud"/>
-		<param name="scan_destination_topic" value="/scan_multi"/>
+		<param name="scan_destination_topic" value="/scan"/>
 		<param name="laserscan_topics" value ="/front/scan /rear/scan" /> 
 		<param name="angle_min" value="-3.14"/>
 		<param name="angle_max" value="3.14"/>
@@ -17,5 +22,17 @@
 
 	<node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_laser_rear" args="-0.35 0.0 0.0 0.0 0.0 0.866 0.5 base_link laser_rear" />
 
+	<node pkg="tf2_ros" type="static_transform_publisher" name="base_footprint_to_base_link" args="0.0 0.0 0.0 0.0 0.0 0.0 1 base_footprint base_link" />
+
+	<node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_scan" args="0.0 0.0 0.0 0.0 0.0 0.0 1 base_link scan" />
+
+	<!--  **************** Gmapping ****************  -->
+	<include file="$(find nav2d_conf)/launch/gmapping.launch.xml"/>
+
+	<!--  **************** Visualisation ****************  -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnirobot_loc_and_mapping)/rviz/omnirobot_loc_and_mapping.rviz"/>
+
+	<!--  **************** Odometry to tf ****************  -->
+	<node pkg="omnirobot_loc_and_mapping" type="odom_tf" name="odom_tf"/>
 
 </launch>
