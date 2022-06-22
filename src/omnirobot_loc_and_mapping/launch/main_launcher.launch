@@ -1,0 +1,18 @@
+<launch>
+
+	<!--  **************** Scan merger ****************  -->
+	<include file="$(find omnirobot_loc_and_mapping)/launch/static_transforms.launch.xml"/>
+
+	<!--  **************** Scan merger ****************  -->
+	<include file="$(find omnirobot_loc_and_mapping)/launch/scan_merger.launch.xml"/>
+
+	<!--  **************** Gmapping ****************  -->
+	<include file="$(find omnirobot_loc_and_mapping)/launch/gmapping.launch.xml"/>
+
+	<!--  **************** Visualisation ****************  -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnirobot_loc_and_mapping)/rviz/omnirobot_loc_and_mapping.rviz"/>
+
+	<!--  **************** Odometry to tf ****************  -->
+	<node pkg="omnirobot_loc_and_mapping" type="odom_tf" name="odom_tf"/>
+
+</launch>
