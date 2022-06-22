@@ -10,7 +10,7 @@ void TransformOdometry::callback(const nav_msgs::Odometry::ConstPtr& msg){
   transform.setOrigin( tf::Vector3(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z) );
   transform.setRotation(tf::Quaternion(msg->pose.pose.orientation.x,msg->pose.pose.orientation.y,msg->pose.pose.orientation.z,msg->pose.pose.orientation.w));
 
-  this->br.sendTransform(tf::StampedTransform(transform, msg->header.stamp, "odom", "base_footprint"));
+  this->br.sendTransform(tf::StampedTransform(transform, msg->header.stamp, "odom", "base_link"));
 }
 
 int main(int argc, char **argv)

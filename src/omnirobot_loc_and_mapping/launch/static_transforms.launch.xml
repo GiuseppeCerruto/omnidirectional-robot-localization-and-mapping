@@ -3,7 +3,7 @@
 
 	<node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_laser_rear" args="-0.35 0.0 0.0 0.0 0.0 0.866 0.5 base_link laser_rear" />
 
-	<node pkg="tf2_ros" type="static_transform_publisher" name="base_footprint_to_base_link" args="0.0 0.0 0.0 0.0 0.0 0.0 1 base_footprint base_link" />
+    <!-- TODO is it necessary this transformation? -->
+	<node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_multi_scan" args="0.0 0.0 0.0 0.0 0.0 0.0 1 base_link multi_scan" />
 
-	<node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_scan" args="0.0 0.0 0.0 0.0 0.0 0.0 1 base_link scan" />
 </launch>
