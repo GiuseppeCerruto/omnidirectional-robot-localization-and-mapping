@@ -29,22 +29,23 @@ class AmclPosesSaver:
         map_path = os.path.join(script_directory_path, '../maps/map2.pgm')
         dest_path = os.path.join(script_directory_path, '../maps/map_with_trajectory.jpg')
 
-        img = cv.imread(map_path, cv.WINDOW_NORMAL);
-        # imS = cv.resize(img, (800, 800))  
-        # cv.imshow("Output", imS);
-        # cv.waitKey(0)
+        img = cv.imread(map_path)
+
+        rospy.loginfo("NUMBER OF POSES: " + str(len(self.poses)) + " ------>")
 
         for i in range(len(self.poses)-1):
             curr_x = self.poses[i].pose.pose.position.x
             curr_y = self.poses[i].pose.pose.position.y
             next_x = self.poses[i+1].pose.pose.position.x
             next_y = self.poses[i+1].pose.pose.position.y
-            cv.line(img,(curr_x, curr_y),(next_x, next_y), (255,0,0), 5)
+            cv.line(img,(int(curr_x), int(curr_y)),(int(next_x), int(next_y)), (0, 0, 255), 3)
 
-            rospy.loginfo("NUMBER OF POSES: " + str(len(self.poses)) + " ------>")
             rospy.loginfo("\ncurr_x " + str(curr_x) + "\ncurr_y " + str(curr_y) + "\nnext_x " + str(next_x) + "\nnext_y " + str(next_y) + "\n")
 
         cv.imwrite(dest_path, img)
+
+        # cv.imshow("Output", img);
+        # cv.waitKey(0)
 
         return True
     

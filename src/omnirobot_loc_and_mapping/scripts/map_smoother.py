@@ -34,7 +34,7 @@ def callback(data):
     custom_map.data =  np.transpose(image).flatten().astype (int)
     pub.publish(custom_map)
 
-    print("Custom map published")
+    print("Custom map published in topic /map_smoothed")
 
 
     
