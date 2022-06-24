@@ -1,2 +1,2 @@
 ---
-uint32 return_value
+bool return_value
