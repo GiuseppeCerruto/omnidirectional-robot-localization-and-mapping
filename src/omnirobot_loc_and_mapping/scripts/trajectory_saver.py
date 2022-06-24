@@ -3,6 +3,7 @@
 import rospy
 from geometry_msgs.msg import PoseWithCovarianceStamped
 from omnirobot_loc_and_mapping.srv import TrajectoryService
+from nav_msgs.msg import MapMetaData
 import cv2 as cv
 import os
 
@@ -12,17 +13,24 @@ class AmclPosesSaver:
     def __init__(self):
 
         rospy.init_node('trajectory_saver', anonymous=True)
+
+        rospy.Subscriber("/map_metadata", MapMetaData, self.metadata_reader_callback)
         
-        rospy.Subscriber("/amcl_pose", PoseWithCovarianceStamped, self.subscriber_callback)
+        rospy.Subscriber("/amcl_pose", PoseWithCovarianceStamped, self.amcl_poe_reader_callback)
         self.poses = []
 
         self.service = rospy.Service('save_trajectory', TrajectoryService, self.service_callback)
 
-        # self.pub = rospy.Publisher("amcl_pose_history", AmclPoses, queue_size=1)
 
-    def subscriber_callback(self, data):
+    def metadata_reader_callback(self, data):
+        self.origin_x = 0.0 - float(data.origin.position.x)
+        self.origin_y = 0.0 - float(data.origin.position.y)
+        self.resolution = float(data.resolution)
+
+
+    def amcl_poe_reader_callback(self, data):
         self.poses.append(data)
-        # self.pub.publish(self.poses)
+
 
     def service_callback(self, req):    
         script_directory_path = os.path.dirname(__file__)
@@ -31,21 +39,15 @@ class AmclPosesSaver:
 
         img = cv.imread(map_path)
 
-        rospy.loginfo("NUMBER OF POSES: " + str(len(self.poses)) + " ------>")
-
         for i in range(len(self.poses)-1):
-            curr_x = self.poses[i].pose.pose.position.x
-            curr_y = self.poses[i].pose.pose.position.y
-            next_x = self.poses[i+1].pose.pose.position.x
-            next_y = self.poses[i+1].pose.pose.position.y
-            cv.line(img,(int(curr_x), int(curr_y)),(int(next_x), int(next_y)), (0, 0, 255), 3)
+            curr_x_px = (self.origin_x / self.resolution) + (self.poses[i].pose.pose.position.x / self.resolution)
+            curr_y_px = (self.origin_y / self.resolution) - (self.poses[i].pose.pose.position.y / self.resolution)
+            next_x_px = (self.origin_x / self.resolution) + (self.poses[i+1].pose.pose.position.x / self.resolution)
+            next_y_px = (self.origin_y / self.resolution) - (self.poses[i+1].pose.pose.position.y / self.resolution)
 
-            rospy.loginfo("\ncurr_x " + str(curr_x) + "\ncurr_y " + str(curr_y) + "\nnext_x " + str(next_x) + "\nnext_y " + str(next_y) + "\n")
+            cv.line(img,(int(curr_x_px), int(curr_y_px)),(int(next_x_px), int(next_y_px)), (0, 0, 255), 1)
 
         cv.imwrite(dest_path, img)
-
-        # cv.imshow("Output", img);
-        # cv.waitKey(0)
 
         return True
     

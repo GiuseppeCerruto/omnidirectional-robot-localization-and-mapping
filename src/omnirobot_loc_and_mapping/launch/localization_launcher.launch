@@ -37,6 +37,7 @@
 
 	<!--  **************** Visualisation ****************  -->
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find omnirobot_loc_and_mapping)/rviz/omnirobot_loc_and_mapping.rviz"/>
+  <node pkg="omnirobot_loc_and_mapping" type="trajectory_drawer.py" name="trajectory_drawer" />
 
 	<!--  **************** Odometry to tf ****************  -->
 	<node pkg="omnirobot_loc_and_mapping" type="odom_tf" name="odom_tf"/>
