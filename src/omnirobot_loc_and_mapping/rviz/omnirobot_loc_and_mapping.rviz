@@ -5,9 +5,6 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Status1
-        - /Particles Pose1
-        - /Path1
       Splitter Ratio: 0.6166219711303711
     Tree Height: 669
   - Class: rviz/Selection
