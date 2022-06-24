@@ -41,4 +41,7 @@
 	<!--  **************** Odometry to tf ****************  -->
 	<node pkg="omnirobot_loc_and_mapping" type="odom_tf" name="odom_tf"/>
 
+  <!--  **************** Save history of poses for trajectory ****************  -->
+	<node pkg="omnirobot_loc_and_mapping" type="save_amcl_pose.py" name="save_amcl_pose" output="screen"/>
+  
 </launch>

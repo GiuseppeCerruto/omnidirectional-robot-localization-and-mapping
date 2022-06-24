@@ -1,0 +1,1 @@
+geometry_msgs/PoseWithCovarianceStamped[] amcl_poses

@@ -7,7 +7,7 @@ import os
 
 
 cwd = os.getcwd()
-pub = rospy.Publisher('my_map', OccupancyGrid, queue_size=1, latch=True)
+pub = rospy.Publisher('map_smoothed', OccupancyGrid, queue_size=1, latch=True)
 
 
 def callback(data):
@@ -34,18 +34,7 @@ def callback(data):
     custom_map.data =  np.transpose(image).flatten().astype (int)
     pub.publish(custom_map)
 
-
-
-    # image = cv2.rotate(image, cv2.ROTATE_180)
-    # image[image == -1] = 150
-    # image[image == 0] = 255
-    # image[image == 100] = 0
-
-    # script_path = os.path.dirname(os.path.realpath(__file__))
-    # filename = '/home/davide/Projects/robotics-project2/src/omnirobot_loc_and_mapping/maps/grid.png'
-    # print ("saving image")
-    # print (filename)
-    # cv2.imwrite(filename,image)
+    print("Custom map published")
 
 
     
