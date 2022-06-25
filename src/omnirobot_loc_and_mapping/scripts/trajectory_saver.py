@@ -32,10 +32,13 @@ class AmclPosesSaver:
         self.poses.append(data)
 
 
-    def service_callback(self, req):    
+    def service_callback(self, req):
+        file_name = req.dest_file_name + ".jpg"
+
         script_directory_path = os.path.dirname(__file__)
-        map_path = os.path.join(script_directory_path, '../maps/map_2_x1_01.pgm')
-        dest_path = os.path.join(script_directory_path, '../maps/map_with_trajectory.jpg')
+        map_path = os.path.join(script_directory_path, '../maps/map.pgm')
+        dest_path_dir = os.path.join(script_directory_path, '../maps/path_images/')
+        dest_path = os.path.join(dest_path_dir, file_name)
 
         img = cv.imread(map_path)
 
