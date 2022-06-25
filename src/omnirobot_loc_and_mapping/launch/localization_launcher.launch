@@ -2,7 +2,7 @@
 <launch>
  
   <!-- Name of the map to use and initial position -->
-  <arg name="map_file"       default="$(find omnirobot_loc_and_mapping)/maps/map2.yaml"/> 
+  <arg name="map_file"       default="$(find omnirobot_loc_and_mapping)/maps/map_2_x1_01.yaml"/> 
   <arg name="initial_pose_x" default="0.0"/>
   <arg name="initial_pose_y" default="0.0"/>
   <arg name="initial_pose_a" default="0.0"/>
