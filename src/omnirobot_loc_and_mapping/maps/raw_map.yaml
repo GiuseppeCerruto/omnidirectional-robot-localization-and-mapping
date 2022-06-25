@@ -1,4 +1,4 @@
-image: map_2_x1_01.pgm
+image: raw_map.pgm
 resolution: 0.050000
 origin: [-40.000000, -40.000000, 0.000000]
 negate: 0

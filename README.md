@@ -72,3 +72,11 @@ TODO continue it
 ## Laser merger parameters
 
 TODO explain it
+
+## How the map has been created
+
+TODO explain:
+- The launch file amcl.launch.xml has been launched
+- The SECOND bag has been played with `--clock` argument active
+- After the end of the bag, the script `map_smoother` has been launched: `rosrun omnirobot_loc_and_mapping map_smoother.py`
+- After the script says "Custom map published in topic /map_smoothed", from command line is called the map server: `rosrun map_server map_saver -f map map:=/map_smoothed`. In this way, the map saved has been processed with openCV to correct some minor imprecisions. In fact, the borders are better defined and some very small obstacles are changed in considering the cell free. It's been saved also the normal map with `rosrun map_server map_saver -f raw_map`, but in this case we saved it in the folder `asset` to let you see the difference.
