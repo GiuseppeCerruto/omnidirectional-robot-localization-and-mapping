@@ -135,16 +135,22 @@ TODO explain it
 TODO explain
 
 
-## How the map has been created
+## TF tree
 
-TODO explain:
-- The launch file amcl.launch.xml has been launched
-- The SECOND bag has been played with `--clock` argument active
-- After the end of the bag, the script `map_smoother` has been launched: `rosrun omnirobot_loc_and_mapping map_smoother.py`
-- After the script says "Custom map published in topic /map_smoothed", from command line is called the map server: `rosrun map_server map_saver -f map map:=/map_smoothed`. In this way, the map saved has been processed with openCV to correct some minor imprecisions. In fact, the borders are better defined and some very small obstacles are changed in considering the cell free. It's been saved also the normal map with `rosrun map_server map_saver -f raw_map`, but in this case we saved it in the folder `asset` to let you see the difference.
+The TF tree structure is shown below:
 
+![tf-tree](assets/images/TF_tree.png)
 
-## How the trajectory has been created
+The root of the structure is the frame `map`, which is used by `amcl` to correct the dead reckoning between the odometry frame `odom` and the robot frame `base_link`. In fact, `map` &#10132; `odom` is broadcasted by the node `/amcl`.
 
-TODO explain:
-After launching the localization, you can run the service `save trajectory`, passing as argument the name of the image that you want to save inside `maps/path_images`: `rosservice call /save_trajectory <name_of_the_image>`. `rosservice call /save_trajectory robot_trajectory_bag1` is an example. You can call this service when you prefer, and the service will save an image with the path done by the robot so far. Notice that if you give a name that already exists, the new image will overwrite the old one.
+The node `/odom_tf` takes as input the odometry information from the topic `/odom` from the bag and broadcasts the correspondent transformation `odom` &#10132; `base_link`. The source code of this node is [src/odom_tf.cpp](src/omnirobot_loc_and_mapping/src/odom_tf.cpp).
+
+Given that the laser sensors are static, for the transformations `base_link` &#10132; `laser_front/rear` a static transform has been used. The same goes for `base_link` &#10132; `multi_scan`, just because it's an identity. The static transformations can be found in the file [static_transforms.launch.xml](src/omnirobot_loc_and_mapping/launch/static_transforms.launch.xml).
+
+The bags also publish `base_footprint` &#10132; `base_link`, which in theory is used to differentiate the center of gravity in 3D from the center of the robot in 2D, for obstacle avoidance, but in this case it was an identity, hence we decided to ignore it and directly link `odom` to `base_link`.
+
+## Authors
+
+- Davide Giacomini ([GitHub](https://github.com/davide-giacomini), [Linkedin](https://www.linkedin.com/in/davide-giacomini/), [email](mailto://giacomini.davide@outlook.com)) --- Person Code: 10567357
+- Giuseppe Cerruto ([GitHub](https://github.com/GiuseppeCerruto)) --- Person Code: 10749409
+- Matteo Barin ([GitHub](https://github.com/teobarin)) --- Person Code: 10618370
