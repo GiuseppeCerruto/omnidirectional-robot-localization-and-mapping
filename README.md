@@ -93,3 +93,9 @@ TODO explain:
 - The SECOND bag has been played with `--clock` argument active
 - After the end of the bag, the script `map_smoother` has been launched: `rosrun omnirobot_loc_and_mapping map_smoother.py`
 - After the script says "Custom map published in topic /map_smoothed", from command line is called the map server: `rosrun map_server map_saver -f map map:=/map_smoothed`. In this way, the map saved has been processed with openCV to correct some minor imprecisions. In fact, the borders are better defined and some very small obstacles are changed in considering the cell free. It's been saved also the normal map with `rosrun map_server map_saver -f raw_map`, but in this case we saved it in the folder `asset` to let you see the difference.
+
+
+## How the trajectory has been created
+
+TODO explain:
+After launching the localization, you can run the service `save trajectory`, passing as argument the name of the image that you want to save inside `maps/path_images`: `rosservice call /save_trajectory <name_of_the_image>`. `rosservice call /save_trajectory robot_trajectory_bag1` is an example. You can call this service when you prefer, and the service will save an image with the path done by the robot so far. Notice that if you give a name that already exists, the new image will overwrite the old one.
