@@ -1,4 +1,4 @@
-image: map_smoothed_2_x2_05.pgm
+image: map_2_x2_01_minscore50.pgm
 resolution: 0.050000
 origin: [-40.000000, -40.000000, 0.000000]
 negate: 0
