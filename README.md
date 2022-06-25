@@ -73,6 +73,19 @@ TODO continue it
 
 TODO explain it
 
+## AMCL parameters 
+
+- Initial poses to zero
+- laser max range
+- map_topic
+- scan_topic
+- frames id
+- odom_model_type = omni
+- number of particles are okay because it represents the actual path that the robot does
+
+TODO explain
+
+
 ## How the map has been created
 
 TODO explain:
