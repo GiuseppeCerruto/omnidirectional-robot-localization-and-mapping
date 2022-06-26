@@ -35,6 +35,8 @@ Finally are defined `CMakeLists.txt` and `package.xml` for compilation purposes.
 
 ## Getting Started
 
+TODO change getting started with submodule
+
 You can either clone the repository and change directory:
 ```
 git clone https://github.com/davide-giacomini/omnidirectional-robot-localization-and-mapping.git
