@@ -7,6 +7,7 @@ The project is implemented in ROS, an open-source robotics middleware suit.
 ## Requirements
 
 - C++
+- Python 3
 - Ubuntu 18.04 (20.04 is okay too)
 - [ROS Melodic (Noetic is okay too)](http://wiki.ros.org/melodic/Installation/Ubuntu)
 - [ROS gmapping](http://wiki.ros.org/gmapping)
@@ -74,7 +75,8 @@ To start the mapping is necessary to launch [mapping_launcher.launch](src/omniro
 roslaunch omnirobot_loc_and_mapping mapping_launcher.launch
 ```
 
-Then, you can start one of the tree bags, as you want. Just notice that one of the three bags doesn't have a good mapping capability:
+We used `bag 2` for mapping because, after some experiments it seemd to be the one that gave the best quality map. Just notice that also map 1 gave a good quality map, instead bag 3 did not have a good mapping capability.
+Then, you can start one of the tree bags, as you want. 
 ```
 rosbag play --clock <bag_name>.bag
 ```
@@ -107,7 +109,7 @@ To start the localization is necessary to launch [localization_launcher.launch](
 roslaunch omnirobot_loc_and_mapping localization_launcher.launch
 ```
 
-Then, you can start one of the tree bags, as you want:
+Then, you can start one of the tree bags, as you want (we used `bag 1 and bag 3` for localization, for the reasons described above):
 ```
 rosbag play --clock <bag_name>.bag
 ```
@@ -127,11 +129,11 @@ We already saved the trajectories of the robot with bag 1 and 3 under the folder
 
 ## Gmapping parameters
 - MaxURagnge must be <= MaxRange, and we put it equal because we empirically saw a better map in this way, rather than 15 and 16, we put 16 and 16. We chose 16 looking at the data sheet.
-We tried the minimum score at 50, 200 and 400. At 50, we considered it to be less realistic than the one at 200. In particular, at 50 there are some clusters of obstacles in the middle of the map that are likely to be non existent. At 400, a lot of points that are likely to be the wall of the room, expecially on the south, are not sensed (they probably don't score enough points) and are put out of bounds.
-We tried the number of particles, and 30 seems a good trade-off
-We tried the map_update_interval to 2 seconds, 0.1 seconds and 0.001 seconds. The update each 0.1 seconds seems to be the best accurate.
+- We tried the minimum score at 50, 200 and 400. At 50, we considered it to be less realistic than the one at 200. In particular, at 50 there are some clusters of obstacles in the middle of the map that are likely to be non existent. At 400, a lot of points that are likely to be the wall of the room, expecially on the south, are not sensed (they probably don't score enough points) and are put out of bounds.
+- We tried different values for the number of particles, and 30 seems a good trade-off
+- We tried the map_update_interval to 2 seconds, 0.1 seconds and 0.001 seconds. The update each 0.1 seconds seems to be the best accurate.
 
-TODO continue it
+Under [assets/images/maps/](assets/images/maps/) is it possible to find all the maps obtained during the parameters tuning described above. 
 
 ## Laser merger parameters
 
@@ -148,14 +150,12 @@ In particular:
 ## AMCL parameters 
 
 - Initial poses to zero
-- laser max range
+- laser max range to `16`, as indicated in the Data Sheet of the laser.
 - map_topic
-- scan_topic
+- scan_topic to `multi_scan`, as described above it is the topic where the merged data from the two laser, will be published
 - frames id
 - odom_model_type = omni
 - number of particles are okay because it represents the actual path that the robot does
-
-TODO explain
 
 
 ## TF tree
