@@ -35,20 +35,16 @@ Finally are defined `CMakeLists.txt` and `package.xml` for compilation purposes.
 
 ## Getting Started
 
-TODO change getting started with submodule
-
-You can either clone the repository and change directory:
+To set up the workspace, let's clone the repository where you prefer and change directory:
 ```
 git clone https://github.com/davide-giacomini/omnidirectional-robot-localization-and-mapping.git
 cd omnidirectional-robot-localization-and-mapping/
 ```
 
-Or you can download the zip file, and unzip it where you prefer and change the name of the directory in `omnidirectional-robot-localization-and-mapping/`. Then, you change directory:
+In order for the laser merger to work, you have to pull the package as submodule:
 ```
-unzip <directory_name.zip> -d <destination_folder>
-cd <path/to/destination_folder>
-mv <directory_name/> omnidirectional-robot-localization-and-mapping/
-cd omnidirectional-robot-localization-and-mapping
+git submodule init
+git submodule update
 ```
 
 Build the environment with catkin:
