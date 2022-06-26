@@ -13,9 +13,24 @@ The project is implemented in ROS, an open-source robotics middleware suit.
 - [ROS map server](http://wiki.ros.org/map_server)
 - [ROS amcl](http://wiki.ros.org/amcl)
 
-## Project structure (TODO copied from first project, to change)
+## Project structure 
 
-TODO
+The project contains one package (`omnirobot_loc_and_mapping`), which root folder is the [/src/omnirobot_loc_and_mapping/](src/omnirobot_loc_and_mapping/) folder. We will consider this as root folder.
+
+The source files are under the [src/](src/omnidirectional_robot_odometry/src/) folder:
+- `odom_tf.cpp`: it deals with the need of having the odometry published as a tf
+
+The Python scripts are under [scripts](src/omnirobot_loc_and_mapping/scripts/) folder:
+- `map_smoother.py`: it computes some post-processing techniques to the map, in order to have it smoother.
+- `trajectory_saver.py`: it is in charge of receiving the current position of the robot, given from amcl_pose, in order to draw the trajectory on the map and save it.
+- `trajectory_drawer.py`: it is in charge of drawing the trajectory on rviz.
+
+
+The [launch files](omnidirectional-robot-localization-and-mapping/src/omnirobot_loc_and_mapping/launch/) contains all the files to start the nodes for mapping, localization, laser merge and trasformation. It also contains the xml files for gmapping and amcl, where it is possible to tune all the parameters.
+
+Under [maps](omnidirectional-robot-localization-and-mapping/src/omnirobot_loc_and_mapping/maps/) it is possible to find the generated map (gmapping) and the maps with trajectories (amcl).
+
+Finally are defined `CMakeLists.txt` and `package.xml` for compilation purposes.
 
 ## Getting Started
 
