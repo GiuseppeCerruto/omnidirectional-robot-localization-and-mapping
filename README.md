@@ -135,7 +135,15 @@ TODO continue it
 
 ## Laser merger parameters
 
-TODO explain it
+For merging the two lasers (one in the front and one in the rear of the robot), we used the package [`ira_laser_tools`](http://wiki.ros.org/ira_laser_tools). We created the node `laserscan_multi_merger` which subscribes to `/front/scan` and `/rear/scan topics`, merges the data coming from the 2 lasers and publishes, in the `/multi_scan topic`, the merged data. 
+
+Here we tuned some parameters, accordingly to the Laser (YDLIDAR G4) characteristics, found on [`YDLIDAR G4 Data Sheet`](https://www.ydlidar.com/Public/upload/files/2022-06-21/YDLIDAR%20G4%20Data%20sheet%20V2.0(220411).pdf). 
+In particular:
+-	We set the min angle to `-Pi` and max angle to `Pi`,  for a total `360°` of field of view.
+-	We set scan_time to `0.0833333` because the max motor frequency (so position changing) is `12Hz`, so the max update should be every 1/12 seconds.
+-	We set the angle_increment to `0.00837758` because the angle resolution of the laser, at `12Hz` of frequency, is `0.48` degree, so 0.48/180 * Pi = 0.00837758 radians. 
+-	We set range_min to `0.28` and range_max to `16` because those are the values indicated in the manual of the laser.
+
 
 ## AMCL parameters 
 
