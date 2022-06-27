@@ -23,7 +23,7 @@ The source files are under the [src/](src/omnirobot_loc_and_mapping/src/) folder
 
 The Python scripts are under [scripts](src/omnirobot_loc_and_mapping/scripts/) folder:
 - `map_smoother.py`: it computes some post-processing techniques to the map, in order to have it smoother.
-- `trajectory_saver.py`: it is in charge of receiving the current position of the robot, given from amcl_pose, in order to draw the trajectory on the map and save it.
+- `trajectory_saver.py`: it is in charge of receiving the current positions of the robot, given from amcl_pose, in order to draw the trajectory on the map and save it.
 - `trajectory_drawer.py`: it is in charge of drawing the trajectory on rviz.
 
 
@@ -118,7 +118,9 @@ Remember the `--clock` argument to let the node synchronize with the bag's clock
 
 With `rviz` you can see the localization process in real-time.
 
-During or after the localization process, it is possible to save the the robot followed trajectory so far. We built a service that takes as input, from command line, the name of the image that you want to save, and it automatically saves an image with the trajectory of the robot under the [/maps/path_images/](src/omnirobot_loc_and_mapping/maps/path_images/) folder:
+During or after the localization process, it is possible to save the the robot followed trajectory so far. In order to do it, we used the OpenCV library. We created a node called `trajectory_saver`, it subscribes to 'amcl_pose' topic receiving all the current positions of the robots and storing them locally. Whenever the service is called, we create the trajectory drawing segments between subsequent positions, using the function `cv2.line`. Note here that, in order to map the position of the robot into pixel of the image, we needed to perform a convertion, using the origin and resolution of the image, contained in the metadata of the map.
+
+We built a service that takes as input, from command line, the name of the image that you want to save, and it automatically saves an image with the trajectory of the robot under the [/maps/path_images/](src/omnirobot_loc_and_mapping/maps/path_images/) folder:
 ```
 rosservice call /save_trajectory <name_of_the_image>
 ```
