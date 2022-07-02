@@ -123,8 +123,6 @@ With `rviz` you can see the localization process in real-time.
 
 During or after the localization process, it is possible to save the the robot followed trajectory so far. In order to do it, we used the OpenCV library.
 
-TODO put it in a different position We created a node called `trajectory_saver`, it subscribes to `/amcl_pose` topic receiving all the current positions of the robots and storing them locally. Whenever the service is called, we create the trajectory drawing segments between subsequent positions, using the function `cv2.line`. Note here that, in order to map the position of the robot into pixel of the image, we needed to perform a convertion, using the origin and resolution of the image, contained in the metadata of the map.
-
 We built a service that takes as input, from command line, the name of the image that you want to save, and it automatically saves an image with the trajectory of the robot under the [/maps/path_images/](src/omnirobot_loc_and_mapping/maps/path_images/) folder:
 ```
 rosservice call /save_trajectory <name_of_the_image>
@@ -205,21 +203,36 @@ For the visualization of the environment, the node `rviz` is launched and the co
 
 The `odom_tf` node is the only node written in cpp. It simply takes as input the odometry published from the bag and converts it into a dynamic TF.
 
+### Map post-processing
+
+This was not required and it is not included in the launch file for mapping, but we added a script that can be called as explained in [Getting Started](https://github.com/davide-giacomini/omnidirectional-robot-localization-and-mapping#getting-started). This script is [map_smoother.py](src/omnirobot_loc_and_mapping/scripts/map_smoother.py) and it performs a post-processing of the map to smooth it.
+
 ## Localization
 
+The file [localization_launcher.launch](src/omnirobot_loc_and_mapping/launch/localization_launcher.launch) is in charge of performing the localization, and it is based on the package [`amcl`](http://wiki.ros.org/amcl). It is very similar to the mapping launch file, with few differences that we are going to explain below.
 
+### Visualization
 
+On `rviz` we added the visualization of the trajectory. For this purpose, we built the script [trajectory_drawer.py](src/omnirobot_loc_and_mapping/scripts/trajectory_drawer.py). It was not required, but it we thought it convenient.
 
-## AMCL parameters 
+### AMCL localization
 
-- Initial poses to zero
+For `amcl` localization we tuned some parameters as we report them below:
+- We set the initial poses to zero, as they are initial poses related to the origin of the map. As all the bags start from the same position, the initial poses myst be zero.
 - laser max range to `16`, as indicated in the Data Sheet of the laser.
-- map_topic
-- scan_topic to `multi_scan`, as described above it is the topic where the merged data from the two laser, will be published
-- frames id
-- odom_model_type = omni
-- number of particles are okay because it represents the actual path that the robot does
+- odom_model_type = omni, because our robot is omnidirectional
 
+All the other parameters have been left the default ones, as the trajectory of the two bags not used for mapping is incredibly accurate with respect to the published odometry.
+
+You can find more information [here](http://wiki.ros.org/amcl#Parameters).
+
+### Map server
+
+We started the server [`map_server`](http://wiki.ros.org/map_server), so that the `/map` is published from the static pre-computed maps.
+
+### Trajectory saver service
+
+We were required to create a service for saving the trajectory. We created a node called `trajectory_saver` with the script [trajectory_saver.py](src/omnirobot_loc_and_mapping/scripts/trajectory_saver.py), it subscribes to `/amcl_pose` topic receiving all the current positions of the robots and storing them locally. Whenever the service is called, we create the trajectory drawing segments between subsequent positions, using the function `cv2.line`. Note here that, in order to map the position of the robot into pixel of the image, we needed to perform a conversion, using the origin and resolution of the image contained in the metadata of the map.
 
 ## TF tree
 
