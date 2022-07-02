@@ -19,7 +19,7 @@ The project is implemented in ROS, an open-source robotics middleware suit.
 The project contains one package (`omnirobot_loc_and_mapping`), which root folder is the [/src/omnirobot_loc_and_mapping/](src/omnirobot_loc_and_mapping/) folder. We will consider this as root folder.
 
 The source files are under the [src/](src/omnirobot_loc_and_mapping/src/) folder:
-- `odom_tf.cpp`: it deals with the need of having the odometry published as a tf
+- `odom_tf.cpp`: it deals with the need of having the odometry published as a tf.
 
 The Python scripts are under [scripts](src/omnirobot_loc_and_mapping/scripts/) folder:
 - `map_smoother.py`: it computes some post-processing techniques to the map, in order to have it smoother.
@@ -67,7 +67,7 @@ Warning: In case you have already defined in your `bashrc` file a path for anoth
 
 Warning: Remember to give executable rights to the scripts in python in order to run them as nodes (otherwise, the launch files will throw an error): `chmod +x <script_name>.py`.
 
-In this project you can choose either to perform the mapping or the localization of the environment. For these tasks there are two launch files (one for localization and one for mapping) and three bag files, introduced [`Project Structure`](https://github.com/davide-giacomini/omnidirectional-robot-localization-and-mapping#project-structure).
+In this project you can choose either to perform the mapping or the localization of the environment. For these tasks there are two launch files (one for localization and one for mapping), introduced [`Project Structure`](https://github.com/davide-giacomini/omnidirectional-robot-localization-and-mapping#project-structure), and three bag files.
 
 During localization, it is possible to save the trajectory of the robot using a service call.
 
@@ -78,7 +78,7 @@ To start the mapping is necessary to launch [mapping_launcher.launch](src/omniro
 roslaunch omnirobot_loc_and_mapping mapping_launcher.launch
 ```
 
-We used `bag 2` for mapping because, after some experiments it seemed to be the one that gave the best quality map. Just notice that also `bag 1` gave a good quality map, instead `bag 3` did not have a good mapping capability.
+We used `bag 2` for mapping because, after some experiments, it seemed to be the one that gave the best quality map. Just notice that also `bag 1` gave a good quality map, instead `bag 3` did not have a good mapping capability.
 Then, you can start one of the tree bags, as you want. 
 ```
 rosbag play --clock <bag_name>.bag
@@ -93,7 +93,7 @@ When the bag ends, it is possible to save the map using the `map_saver` service 
 rosrun map_server map_saver -f map
 ```
 
-We also implemented a script to process the image of the map and correct some minor imprecisions that can be easily detected. It can be run as a ros node:
+We also used a script to process the image of the map and correct some minor imprecisions that can be easily detected. It can be run as a ros node:
 ```
 rosrun omnirobot_loc_and_mapping map_smoother.py
 ```
@@ -129,8 +129,8 @@ rosservice call /save_trajectory <name_of_the_image>
 ```
 
 For example: `rosservice call /save_trajectory robot_trajectory_bag1`.
-
-We already saved the trajectories of the robot with `bag 1 `and `bag 3` under the folder [previously_generated_maps/](previously_generated_maps/).
+src/omnirobot_loc_and_mapping/maps/path_images/
+We already saved the trajectories of the robot with `bag 1 `and `bag 3` under the folder [src/omnirobot_loc_and_mapping/maps/path_images/](src/omnirobot_loc_and_mapping/maps/path_images/).
 
 ## Project Description
 
@@ -220,11 +220,11 @@ On `rviz` we added the visualization of the trajectory. For this purpose, we bui
 For `amcl` localization we tuned some parameters as we report them below:
 - We set the initial poses to zero, as they are initial poses related to the origin of the map. As all the bags start from the same position, the initial poses myst be zero.
 - laser max range to `16`, as indicated in the Data Sheet of the laser.
-- odom_model_type = omni, because our robot is omnidirectional
+- odom_model_type to `omni`, because our robot is omnidirectional
 
-All the other parameters have been left the default ones, as the trajectory of the two bags not used for mapping is incredibly accurate with respect to the published odometry.
+All the other parameters have been left as the default ones, as the trajectory of the two bags (bag1 and bag3), not used for mapping, is incredibly accurate with respect to the published odometry.
 
-You can find more information [here](http://wiki.ros.org/amcl#Parameters).
+You can find more information about amcl parameters [here](http://wiki.ros.org/amcl#Parameters).
 
 ### Map server
 
