@@ -8,6 +8,7 @@ The project is implemented in ROS, an open-source robotics middleware suit.
 
 - C++
 - Python 3
+- OpenCV (python library)
 - Ubuntu 18.04 (20.04 is okay too)
 - [ROS Melodic (Noetic is okay too)](http://wiki.ros.org/melodic/Installation/Ubuntu)
 - [ROS gmapping](http://wiki.ros.org/gmapping)
@@ -129,8 +130,8 @@ rosservice call /save_trajectory <name_of_the_image>
 ```
 
 For example: `rosservice call /save_trajectory robot_trajectory_bag1`.
-src/omnirobot_loc_and_mapping/maps/path_images/
-We already saved the trajectories of the robot with `bag 1 `and `bag 3` under the folder [src/omnirobot_loc_and_mapping/maps/path_images/](src/omnirobot_loc_and_mapping/maps/path_images/).
+
+We already saved the trajectories of the robot with bag 1 and bag 3 under the folder [previously_generated_maps/](previously_generated_maps/).
 
 ## Project Description
 
