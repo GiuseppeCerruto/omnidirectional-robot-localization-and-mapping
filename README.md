@@ -250,6 +250,6 @@ The bags also publish `base_footprint` &#10132; `base_link`, which in theory is 
 
 ## Authors
 
-- Davide Giacomini ([GitHub](https://github.com/davide-giacomini), [Linkedin](https://www.linkedin.com/in/davide-giacomini/), [email](mailto://giacomini.davide@outlook.com)) --- Person Code: 10567357
-- Giuseppe Cerruto ([GitHub](https://github.com/GiuseppeCerruto)) --- Person Code: 10749409
-- Matteo Barin ([GitHub](https://github.com/teobarin)) --- Person Code: 10618370
+- Davide Giacomini ---  [GitHub](https://github.com/davide-giacomini) - [Linkedin](https://www.linkedin.com/in/davide-giacomini/) - [email](mailto://giacomini.davide@outlook.com)
+- Giuseppe Cerruto --- [GitHub](https://github.com/GiuseppeCerruto)
+- Matteo Barin --- [GitHub](https://github.com/teobarin)
