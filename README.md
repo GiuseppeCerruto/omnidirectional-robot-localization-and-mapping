@@ -93,6 +93,7 @@ When the bag ends, it is possible to save the map using the `map_saver` service 
 ```
 rosrun map_server map_saver -f map
 ```
+Remember that, to use the generated map for localization, you must save the `.pgm` file and the `.yaml` file generated under the folder [maps/](src/omnirobot_loc_and_mapping/maps/).
 
 We also used a script to process the image of the map and correct some minor imprecisions that can be easily detected. It can be run as a ros node:
 ```
